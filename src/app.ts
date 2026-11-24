@@ -1,10 +1,12 @@
 import express, { Express } from "express";
 import morgan from "morgan";
+import loanApplicationRoutes from "./api/v1/routes/loanApplicationRoutes";
 
 const app: Express = express();
 
 app.use(morgan("combined"));
 app.use(express.json());
+app.use("/api/v1/loans", loanApplicationRoutes);
 
 app.get("/api/v1/health", (req, res) => {
     res.json({
