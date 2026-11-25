@@ -26,7 +26,6 @@ export const getAllLoanApplications = async (
     }
 };
 
-
 /**
  * Manages requests and responses to retrieve a loan application by ID
  * @param req - The express Request
@@ -47,6 +46,36 @@ export const getLoanApplicationById = async (
         res.status(HTTP_STATUS.OK).json({
             message: "Loan application retrieved",
             data: loan
+        });
+    } catch (error: unknown) {
+        next(error);
+    }
+};
+
+/**
+ * Manages requests, responses, and validation to create a Loan Application
+ * @param req - The express Request
+ * @param res - The express Response
+ * @param next - The express middleware chaining function
+ */
+export const createLoanApplication = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
+        // Extract only the fields we want (destructuring)
+        const { applicant, amount } = req.body;
+
+        const newLoan: LoanApplication =
+            await loanApplicationService.createLoanApplication({
+                applicant,
+                amount
+            });
+
+        res.status(HTTP_STATUS.CREATED).json({
+            message: "Loan application created",
+            data: newLoan
         });
     } catch (error: unknown) {
         next(error);

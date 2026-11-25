@@ -23,4 +23,13 @@ router.get(
     loanApplicationController.getLoanApplicationById
 );
 
+/**
+ * POST /api/v1/loans
+ * Creates a new loan application
+ */
+router.post(
+    "/",
+    loanApplicationController.createLoanApplication
+);
+
 export default router;

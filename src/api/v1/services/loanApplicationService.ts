@@ -34,6 +34,9 @@ const loanApplications: LoanApplication[] = [
     },
 ];
 
+// ID to assign to the next new loan application
+let nextLoanId: number = 5;
+
 /**
  * Retrieves all loan applications from storage
  * @returns Array of all loan applications
@@ -62,3 +65,27 @@ export const getLoanApplicationById = (
 
     return loan;
 };
+
+/**
+ * Creates a new loan application
+ * @param loanData - The data for the new loan application (applicant and amount)
+ * @returns The created loan application with generated ID
+ */
+export const createLoanApplication = async (loanData: {
+    applicant: string;
+    amount: number;
+}): Promise<LoanApplication> => {
+    const newLoan: LoanApplication = {
+        id: nextLoanId,
+        applicant: loanData.applicant,
+        amount: loanData.amount,
+        status: "pending",
+        createdAt: new Date().toISOString()
+    };
+
+    loanApplications.push(newLoan);
+    nextLoanId++;
+
+    return newLoan;
+};
+
