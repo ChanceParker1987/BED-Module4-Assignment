@@ -41,4 +41,13 @@ router.put(
     loanApplicationController.updateLoanApplication
 );
 
+/**
+ * DELETE /api/v1/loans/:id
+ * Deletes an existing loan application
+ */
+router.delete(
+    "/:id",
+    loanApplicationController.deleteLoanApplication
+);
+
 export default router;

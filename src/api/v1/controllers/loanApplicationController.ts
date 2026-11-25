@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import * as loanApplicationService from "../services/loanApplicationService";
 import { LoanApplication } from "../models/loanApplicationModel";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
+import { successResponse } from "../models/responseModel";
 
 /**
  * Retrieves all loan applications
@@ -111,6 +112,30 @@ export const updateLoanApplication = async (
             message: "Loan application updated",
             data: updatedLoan
         });
+    } catch (error: unknown) {
+        next(error);
+    }
+};
+
+/**
+ * Manages requests and responses to delete a Loan Application
+ * @param req - The express Request
+ * @param res - The express Response
+ * @param next - The express middleware chaining function
+ */
+export const deleteLoanApplication = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
+        const id: number = Number(req.params.id);
+
+        await loanApplicationService.deleteLoanApplication(id);
+
+        res.status(HTTP_STATUS.OK).json(
+            successResponse("Loan application successfully deleted")
+        );
     } catch (error: unknown) {
         next(error);
     }
