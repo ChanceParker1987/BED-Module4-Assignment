@@ -1,5 +1,7 @@
 
 import { LoanApplication } from "../models/loanApplicationModel";
+import { ServiceError } from "../errors/errors";
+import { HTTP_STATUS } from "../../../constants/httpConstants";
 
 const loanApplications: LoanApplication[] = [
     {
@@ -32,6 +34,31 @@ const loanApplications: LoanApplication[] = [
     },
 ];
 
-export const getAllLoanApplications = (): LoanApplication[] => {
+/**
+ * Retrieves all loan applications from storage
+ * @returns Array of all loan applications
+ */
+export const getAllLoanApplications = async (): Promise<LoanApplication[]> => {
     return loanApplications;
+};
+
+/**
+ * Retrieves a single loan application by ID
+ * @param id - The ID of the loan application to retrieve
+ * @returns The loan application if found
+ */
+export const getLoanApplicationById = (
+    id: number
+): LoanApplication => {
+    const loan = loanApplications.find((loan) => loan.id === id);
+
+    if (!loan) {
+        throw new ServiceError(
+            "Loan application not found",
+            "LOAN_NOT_FOUND",
+            HTTP_STATUS.NOT_FOUND
+        );
+    }
+
+    return loan;
 };

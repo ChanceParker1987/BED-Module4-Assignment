@@ -1,2 +1,11 @@
 node_modules/
 dist/
+
+.vscode/
+
+# Logs
+logs/
+*.log
+
+# Firebase service account credentials
+*firebase-adminsdk*.json
