@@ -32,4 +32,13 @@ router.post(
     loanApplicationController.createLoanApplication
 );
 
+/**
+ * PUT /api/v1/loans/:id
+ * Updates an existing loan application
+ */
+router.put(
+    "/:id",
+    loanApplicationController.updateLoanApplication
+);
+
 export default router;
