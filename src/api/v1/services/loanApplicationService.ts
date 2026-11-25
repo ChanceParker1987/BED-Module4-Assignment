@@ -123,3 +123,19 @@ export const updateLoanApplication = async (
     return loan;
 };
 
+/**
+ * Deletes a loan application from storage
+ * @param id - The ID of the loan application to delete
+ * @throws Error if loan application with given ID is not found
+ */
+export const deleteLoanApplication = async (
+    id: number
+): Promise<void> => {
+    // check if the loan application exists before deleting
+    const loan: LoanApplication = getLoanApplicationById(id);
+
+    // remove the loan application from the array
+    const index: number = loanApplications.indexOf(loan);
+    loanApplications.splice(index, 1);
+};
+
