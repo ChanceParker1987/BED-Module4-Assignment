@@ -89,3 +89,37 @@ export const createLoanApplication = async (loanData: {
     return newLoan;
 };
 
+/**
+ * Updates an existing loan application
+ * @param id - The ID of the loan application to update
+ * @param loanData - The fields to update
+ * @returns The updated loan application
+ * @throws Error if loan application with given ID is not found
+ */
+export const updateLoanApplication = async (
+    id: number,
+    loanData: {
+        applicant?: string;
+        amount?: number;
+        status?: string;
+    }
+): Promise<LoanApplication> => {
+    // check if the loan application exists before updating
+    const loan: LoanApplication = getLoanApplicationById(id);
+
+    // only update fields that were provided
+    if (loanData.applicant !== undefined) {
+        loan.applicant = loanData.applicant;
+    }
+
+    if (loanData.amount !== undefined) {
+        loan.amount = loanData.amount;
+    }
+
+    if (loanData.status !== undefined) {
+        loan.status = loanData.status;
+    }
+
+    return loan;
+};
+
