@@ -81,3 +81,37 @@ export const createLoanApplication = async (
         next(error);
     }
 };
+
+/**
+ * Manages requests and responses to update a Loan Application
+ * @param req - The express Request
+ * @param res - The express Response
+ * @param next - The express middleware chaining function
+ */
+export const updateLoanApplication = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
+        const id: number = Number(req.params.id);
+
+        // Extract update fields
+        const { applicant, amount, status } = req.body;
+
+        // create the update loan object with the fields to be updated
+        const updatedLoan: LoanApplication =
+            await loanApplicationService.updateLoanApplication(id, {
+                applicant,
+                amount,
+                status
+            });
+
+        res.status(HTTP_STATUS.OK).json({
+            message: "Loan application updated",
+            data: updatedLoan
+        });
+    } catch (error: unknown) {
+        next(error);
+    }
+};
